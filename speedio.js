@@ -3,36 +3,52 @@
 
   var c = document.querySelector('canvas');
   var ctx = c.getContext('2d');
+  var debugBox = document.querySelector('#debug');
 
   var canvasWidth = c.width;
   var canvasHeight = c.height;
 
-  var pointX = 0;
-  var pointY = 0;
+  var bike = null;
 
-  var turn = false;
-  var angle = 90;
-  var speed = 5;
-
-  function tick() {
-    if (speed > 0) {
-      if (turn) {
-        angle = angle - 10;
-      }
-      var vX = Math.sin(angle * Math.PI / 180) * speed;
-      var vY = -Math.cos(angle * Math.PI / 180) * speed;
-
-      pointX = pointX + vX;
-      pointY = pointY + vY;
-
-      ctx.lineTo(pointX, pointY);
-      ctx.stroke();
-      console.log(pointX, pointY);
-    }
+  function Bike(x, y){
+    this.x = x;
+    this.y = y;
+    this.turn = false;
+    this.angle = 90;
+    this.speed = 5;
   }
 
+  function tick() {
+    if (bike.speed > 0) {
+      if (bike.turn) {
+        bike.angle = bike.angle - 10;
+      }
+      var vX = Math.sin(bike.angle * Math.PI / 180) * bike.speed;
+      var vY = -Math.cos(bike.angle * Math.PI / 180) * bike.speed;
+
+      bike.x = bike.x + vX;
+      bike.y = bike.y + vY;
+
+      ctx.lineTo(bike.x, bike.y);
+      color = 255 - (bike.speed * 20);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(bike.x, bike.y);
+      ctx.lineWidth = '1';
+      colorR = '255';
+      colorG = bike.speed * 10;
+      colorB = bike.speed * 10;
+      ctx.strokeStyle = 'rgb('+colorR+','+colorG+','+colorB+');';
+    }
+    debug();
+  }
+
+  function debug() {
+    debugBox.innerText = "BIKE\nspeed: "+bike.speed + "\n" + "angle: " + bike.angle + "\n" + "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")";
+  };
+
   function init() {
-    //ctx.translate(0.5, 0.5);
+    ctx.translate(0.5, 0.5);
 
     c.width = window.innerWidth;
     c.height = window.innerHeight;
@@ -42,30 +58,40 @@
 
     ctx.beginPath();
     ctx.lineWidth = '1';
-    ctx.strokeStyle = 'green';
+    ctx.strokeStyle = 'rgb(255, 0, 0)';
 
-    pointX = canvasWidth / 2;
-    pointY = canvasHeight / 2;
-
-    ctx.moveTo(pointX, pointY);
+    bike = new Bike(canvasWidth / 2, canvasHeight / 2);
+    ctx.moveTo(bike.x, bike.y);
 
     setInterval(tick, 1000 / FPS);
-    console.log(pointX, pointY);
+  };
+
+  function reset() {
+    c.width = c.width;
+    bike = new Bike(canvasWidth / 2, canvasHeight / 2);
+    ctx.beginPath();
+    ctx.lineWidth = '1';
+    ctx.strokeStyle = 'rgb(255, 0, 0)';
+    ctx.moveTo(bike.x, bike.y);
   };
 
   function keydown(key) {
     if (key.which == 37) {
-      turn = true;
+      bike.turn = true;
     } else if (key.which == 83) {
-      speed = 0;
+      bike.speed = 0;
     } else if (key.which == 65) {
-      speed = 5;
+      bike.speed = bike.speed + 1;
+    } else if (key.which == 68) {
+      debugBox.hidden = !debugBox.hidden;
+    } else if (key.which == 82) {
+      reset();
     }
   };
 
   function keyup(key) {
     if (key.which == 37) {
-      turn = false;
+      bike.turn = false;
     }
   }
 

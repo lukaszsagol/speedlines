@@ -5,3 +5,16 @@ html, body {
 canvas {
   background: #000000;
 }
+
+#debug {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255,255,255, 0.4);
+  padding: 5px;
+  width: 150px;
+  height: 100px;
+  font-family: monospace;
+  color: black;
+  font-size: 10px;
+}
