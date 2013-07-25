@@ -14,6 +14,8 @@
 
   var laneWidth = 150;
   var laneLength = canvasWidth / 2;
+  var startX = 0;
+  var startY = 0;
 
   var bikes = [];
 
@@ -48,6 +50,7 @@
       ctx.beginPath();
       ctx.moveTo(this.x, this.y);
       ctx.strokeStyle = this.color;
+      ctx.lineWidth = 1;
 
       this.drive();
 
@@ -55,9 +58,18 @@
       ctx.stroke();
 
       if (!this.onTrack()) {
-        this.speed = 0;
-        this.crashed = true;
+        this.crash();
       }
+    };
+
+    this.crash = function() {
+      this.speed = 0;
+      this.crashed = true;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 5, 0 * Math.PI, 2 * Math.PI);
+      ctx.fillStyle = this.color;
+      ctx.lineWidth = 1;
+      ctx.fill();
     };
 
     this.keydown = function(keyCode) {
@@ -107,21 +119,24 @@
   };
 
   function paintTrack() {
-    var startX = canvasWidth / 2 - (laneLength / 2);
-    var startY = canvasHeight / 2 + laneWidth;
 
     trackCtx.beginPath();
 
     trackCtx.moveTo(startX, startY);
     trackCtx.strokeStyle = 'black'
     trackCtx.lineWidth = laneWidth;
-    trackCtx.lineTo(startX + laneLength, startY);
-    trackCtx.bezierCurveTo(startX + laneLength + 200, startY, startX + laneLength + 200, startY - (2 * laneWidth), startX + laneLength, startY - (2 * laneWidth));
-    trackCtx.lineTo(startX, startY - (2 * laneWidth));
-    trackCtx.bezierCurveTo(startX - 200, startY - (2 * laneWidth), startX - 200, startY, startX, startY);
+
+    paintTrackCurve(trackCtx);
 
     trackCtx.stroke();
-  }
+  };
+
+  function paintTrackCurve(context) {
+    context.lineTo(startX + laneLength, startY);
+    context.bezierCurveTo(startX + laneLength + 200, startY, startX + laneLength + 200, startY - (2 * laneWidth), startX + laneLength, startY - (2 * laneWidth));
+    context.lineTo(startX, startY - (2 * laneWidth));
+    context.bezierCurveTo(startX - 200, startY - (2 * laneWidth), startX - 200, startY, startX, startY);
+  };
 
   function init() {
     ctx.translate(0.5, 0.5);
@@ -135,12 +150,28 @@
     canvasHeight = c.height;
     laneLength = canvasWidth / 2;
 
+    startX = canvasWidth / 2 - (laneLength / 2);
+    startY = canvasHeight / 2 + laneWidth;
+
     paintTrack();
 
     bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + laneWidth - 10, 'red', 65));
-    //bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + laneWidth + 10, 'green', 76));
+    bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + laneWidth + 10, 'green', 76));
+
     setInterval(tick, 1000 / FPS);
+    setInterval(darken, 1000);
   };
+
+  function darken() {
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+    ctx.lineWidth = laneWidth;
+
+    paintTrackCurve(ctx);
+
+    ctx.stroke();
+  }
 
   function reset() {
     c.width = c.width;
