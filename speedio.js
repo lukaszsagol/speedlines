@@ -44,7 +44,9 @@
   }
 
   function debug() {
-    debugBox.innerText = "BIKE\nspeed: "+bike.speed + "\n" + "angle: " + bike.angle + "\n" + "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")";
+    debugBox.innerText = "BIKE\nspeed: "+bike.speed + "\n" +
+                              "angle: " + bike.angle + "\n" +
+                              "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")\n" + (bike.turn == true ? "turning" : "");
   };
 
   function init() {
