@@ -8,9 +8,9 @@
   var canvasWidth = c.width;
   var canvasHeight = c.height;
 
-  var bike = null;
+  var bikes = [];
 
-  function Bike(context, x, y){
+  function Bike(context, x, y, color, keyCode){
     this.ctx = context;
     this.startX = x;
     this.startY = y;
@@ -19,7 +19,8 @@
     this.turn = false;
     this.angle = 90;
     this.speed = 5;
-    this.keyCode = 37;
+    this.keyCode = keyCode;
+    this.color = color;
 
     this.drive = function() {
       if (this.speed > 0) {
@@ -38,10 +39,7 @@
     this.tick = function() {
       ctx.beginPath();
       ctx.moveTo(this.x, this.y);
-      colorR = '255';
-      colorG = bike.speed * 10;
-      colorB = bike.speed * 10;
-      ctx.strokeStyle = 'rgb('+colorR+','+colorG+','+colorB+');';
+      ctx.strokeStyle = this.color;
 
       this.drive();
 
@@ -63,22 +61,27 @@
       ctx.moveTo(this.startX, this.startY);
       this.x = this.startX;
       this.y = this.startY;
+      this.angle = 90;
     };
+
+    this.reset = this.init;
 
     this.init();
   }
 
   function tick() {
-    bike.tick();
+    bikes.forEach(function(bike) { bike.tick(); });
     debug();
   }
 
   function debug() {
-    debugBox.innerText = "BIKE\nspeed: "+bike.speed + "\n" +
-                              "angle: " + bike.angle + "\n" +
-                              "start: " + parseInt(bike.startX) + "," + parseInt(bike.startY) + "\n" +
-                              "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")\n" + (bike.turn == true ? "turning" : "")
-    ;
+    debugBox.innerText = '';
+    bikes.forEach(function(bike) {
+      debugBox.innerText += "BIKE " + bike.color + "\nspeed: "+bike.speed + "\n" +
+                                "angle: " + bike.angle + "\n" +
+                                "start: " + parseInt(bike.startX) + "," + parseInt(bike.startY) + "\n" +
+                                "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")\n" + (bike.turn == true ? "turning" : "") + "\n";
+    });
   };
 
   function init() {
@@ -90,31 +93,33 @@
     canvasWidth = c.width;
     canvasHeight = c.height;
 
-    bike = new Bike(ctx, canvasWidth / 2, canvasHeight / 2);
-
+    bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2, 'red', 65));
+    bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + 20, 'green', 83));
     setInterval(tick, 1000 / FPS);
   };
 
   function reset() {
     c.width = c.width;
-    bike.init();
+    bikes.forEach(function(bike) { bike.reset(); });
   };
 
   function keydown(key) {
-    bike.keydown(key.which);
-    if (key.which == 83) {
-      bike.speed = 0;
-    } else if (key.which == 65) {
-      bike.speed = bike.speed + 1;
-    } else if (key.which == 68) {
-      debugBox.hidden = !debugBox.hidden;
-    } else if (key.which == 82) {
-      reset();
-    }
+    bikes.forEach(function(bike) { bike.keydown(key.which); });
+
+    //if (key.which == 83) {
+      //bike.speed = 0;
+    //} else if (key.which == 65) {
+      //bike.speed = bike.speed + 1;
+    //} else if (key.which == 68) {
+      //debugBox.hidden = !debugBox.hidden;
+    //} else if (key.which == 82) {
+      //reset();
+    //}
   };
 
   function keyup(key) {
-    bike.keyup(key.which);
+    bikes.forEach(function(bike) { bike.keyup(key.which); });
+
     //if (key.which == 37) {
       //bike.turn = false;
     //}
