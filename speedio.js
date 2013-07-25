@@ -10,43 +10,75 @@
 
   var bike = null;
 
-  function Bike(x, y){
+  function Bike(context, x, y){
+    this.ctx = context;
+    this.startX = x;
+    this.startY = y;
     this.x = x;
     this.y = y;
     this.turn = false;
     this.angle = 90;
     this.speed = 5;
-  }
+    this.keyCode = 37;
 
-  function tick() {
-    if (bike.speed > 0) {
-      if (bike.turn) {
-        bike.angle = bike.angle - 10;
+    this.drive = function() {
+      if (this.speed > 0) {
+        if (this.turn) {
+          this.angle -= 10;
+        };
+
+        var velocityX = Math.sin(this.angle * Math.PI / 180) * this.speed;
+        var velocityY = -Math.cos(this.angle * Math.PI / 180) * this.speed;
+
+        this.x += velocityX;
+        this.y += velocityY;
       }
-      var vX = Math.sin(bike.angle * Math.PI / 180) * bike.speed;
-      var vY = -Math.cos(bike.angle * Math.PI / 180) * bike.speed;
+    };
 
-      bike.x = bike.x + vX;
-      bike.y = bike.y + vY;
-
-      ctx.lineTo(bike.x, bike.y);
-      color = 255 - (bike.speed * 20);
-      ctx.stroke();
+    this.tick = function() {
       ctx.beginPath();
-      ctx.moveTo(bike.x, bike.y);
-      ctx.lineWidth = '1';
+      ctx.moveTo(this.x, this.y);
       colorR = '255';
       colorG = bike.speed * 10;
       colorB = bike.speed * 10;
       ctx.strokeStyle = 'rgb('+colorR+','+colorG+','+colorB+');';
-    }
+
+      this.drive();
+
+      ctx.lineTo(this.x, this.y);
+      ctx.stroke();
+    };
+
+    this.keydown = function(keyCode) {
+      this.turn = this.turn || (keyCode === this.keyCode);
+    };
+
+    this.keyup = function(keyCode) {
+      if (keyCode === this.keyCode) {
+        this.turn = false;
+      }
+    };
+
+    this.init = function() {
+      ctx.moveTo(this.startX, this.startY);
+      this.x = this.startX;
+      this.y = this.startY;
+    };
+
+    this.init();
+  }
+
+  function tick() {
+    bike.tick();
     debug();
   }
 
   function debug() {
     debugBox.innerText = "BIKE\nspeed: "+bike.speed + "\n" +
                               "angle: " + bike.angle + "\n" +
-                              "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")\n" + (bike.turn == true ? "turning" : "");
+                              "start: " + parseInt(bike.startX) + "," + parseInt(bike.startY) + "\n" +
+                              "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")\n" + (bike.turn == true ? "turning" : "")
+    ;
   };
 
   function init() {
@@ -58,29 +90,19 @@
     canvasWidth = c.width;
     canvasHeight = c.height;
 
-    ctx.beginPath();
-    ctx.lineWidth = '1';
-    ctx.strokeStyle = 'rgb(255, 0, 0)';
-
-    bike = new Bike(canvasWidth / 2, canvasHeight / 2);
-    ctx.moveTo(bike.x, bike.y);
+    bike = new Bike(ctx, canvasWidth / 2, canvasHeight / 2);
 
     setInterval(tick, 1000 / FPS);
   };
 
   function reset() {
     c.width = c.width;
-    bike = new Bike(canvasWidth / 2, canvasHeight / 2);
-    ctx.beginPath();
-    ctx.lineWidth = '1';
-    ctx.strokeStyle = 'rgb(255, 0, 0)';
-    ctx.moveTo(bike.x, bike.y);
+    bike.init();
   };
 
   function keydown(key) {
-    if (key.which == 37) {
-      bike.turn = true;
-    } else if (key.which == 83) {
+    bike.keydown(key.which);
+    if (key.which == 83) {
       bike.speed = 0;
     } else if (key.which == 65) {
       bike.speed = bike.speed + 1;
@@ -92,9 +114,10 @@
   };
 
   function keyup(key) {
-    if (key.which == 37) {
-      bike.turn = false;
-    }
+    bike.keyup(key.which);
+    //if (key.which == 37) {
+      //bike.turn = false;
+    //}
   }
 
   window.addEventListener('load', init, false);
