@@ -1,12 +1,19 @@
 (function() {
   var FPS = 30;
 
-  var c = document.querySelector('canvas');
+  var c = document.querySelector('#race');
   var ctx = c.getContext('2d');
+
+  var track = document.querySelector('#track');
+  var trackCtx = track.getContext('2d');
+
   var debugBox = document.querySelector('#debug');
 
   var canvasWidth = c.width;
   var canvasHeight = c.height;
+
+  var laneWidth = 150;
+  var laneLength = canvasWidth / 2;
 
   var bikes = [];
 
@@ -18,14 +25,14 @@
     this.y = y;
     this.turn = false;
     this.angle = 90;
-    this.speed = 5;
+    this.speed = 10;
     this.keyCode = keyCode;
     this.color = color;
 
     this.drive = function() {
       if (this.speed > 0) {
         if (this.turn) {
-          this.angle -= 10;
+          this.angle -= 5;
         };
 
         var velocityX = Math.sin(this.angle * Math.PI / 180) * this.speed;
@@ -84,22 +91,49 @@
     });
   };
 
+  function paintTrack() {
+    var startX = canvasWidth / 2 - (laneLength / 2);
+    var startY = canvasHeight / 2 + laneWidth;
+
+    trackCtx.beginPath();
+
+    trackCtx.moveTo(startX, startY);
+    trackCtx.strokeStyle = 'black'
+    trackCtx.lineWidth = laneWidth;
+    trackCtx.lineTo(startX + laneLength, startY);
+    trackCtx.bezierCurveTo(startX + laneLength + 200, startY, startX + laneLength + 200, startY - (2 * laneWidth), startX + laneLength, startY - (2 * laneWidth));
+    trackCtx.lineTo(startX, startY - (2 * laneWidth));
+    trackCtx.bezierCurveTo(startX - 200, startY - (2 * laneWidth), startX - 200, startY, startX, startY);
+
+    trackCtx.stroke();
+
+
+
+
+  }
+
   function init() {
     ctx.translate(0.5, 0.5);
 
     c.width = window.innerWidth;
     c.height = window.innerHeight;
+    track.width = window.innerWidth;
+    track.height = window.innerHeight;
 
     canvasWidth = c.width;
     canvasHeight = c.height;
+    laneLength = canvasWidth / 2;
 
-    bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2, 'red', 65));
-    bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + 20, 'green', 83));
+    paintTrack();
+
+    bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + laneWidth - 10, 'red', 65));
+    bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + laneWidth + 10, 'green', 76));
     setInterval(tick, 1000 / FPS);
   };
 
   function reset() {
     c.width = c.width;
+    paintTrack();
     bikes.forEach(function(bike) { bike.reset(); });
   };
 
