@@ -16,6 +16,7 @@
   var laneLength = canvasWidth / 2;
   var startX = 0;
   var startY = 0;
+  var startLineX = 0;
 
   var bikes = [];
 
@@ -31,6 +32,7 @@
     this.keyCode = keyCode;
     this.color = color;
     this.crashed = false;
+    this.lap = 1;
 
     this.drive = function() {
       if (this.speed > 0) {
@@ -41,6 +43,9 @@
         var velocityX = Math.sin(this.angle * Math.PI / 180) * this.speed;
         var velocityY = -Math.cos(this.angle * Math.PI / 180) * this.speed;
 
+        this.previousX = this.x;
+        this.previousY = this.y;
+
         this.x += velocityX;
         this.y += velocityY;
       }
@@ -49,17 +54,31 @@
     this.tick = function() {
       ctx.beginPath();
       ctx.moveTo(this.x, this.y);
-      ctx.strokeStyle = this.color;
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+      ctx.lineWidth = 20;
 
       this.drive();
+      this.checkLap();
 
       ctx.lineTo(this.x, this.y);
       ctx.stroke();
 
+      ctx.moveTo(this.previousX, this.previousY);
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = 1;
+      ctx.lineTo(this.x, this.y);
+      ctx.stroke();
+
+
       if (!this.onTrack()) {
         this.crash();
       }
+    };
+
+    this.checkLap = function() {
+      if ((this.previousX < startLineX) && (this.x > startLineX)) {
+        this.lap += 1;
+      };
     };
 
     this.crash = function() {
@@ -113,6 +132,7 @@
                                 "angle: " + bike.angle + "\n" +
                                 "start: " + parseInt(bike.startX) + "," + parseInt(bike.startY) + "\n" +
                                 "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")\n" +
+                                "lap: "+bike.lap+"\n"+
                                 (bike.turn == true ? "turning" : "") + "\n" +
                                 (bike.crashed == true ? "crashed" : "") + "\n";
     });
@@ -123,11 +143,18 @@
     trackCtx.beginPath();
 
     trackCtx.moveTo(startX, startY);
-    trackCtx.strokeStyle = 'black'
+    trackCtx.strokeStyle = 'black';
     trackCtx.lineWidth = laneWidth;
 
     paintTrackCurve(trackCtx);
 
+    trackCtx.stroke();
+
+    trackCtx.beginPath();
+    trackCtx.strokeStyle = 'white';
+    trackCtx.lineWidth = 3;
+    trackCtx.moveTo(startLineX-1, startY - (laneWidth/2));
+    trackCtx.lineTo(startLineX-1, startY + (laneWidth/2));
     trackCtx.stroke();
   };
 
@@ -152,14 +179,15 @@
 
     startX = canvasWidth / 2 - (laneLength / 2);
     startY = canvasHeight / 2 + laneWidth;
+    startLineX = canvasWidth / 2;
 
     paintTrack();
 
-    bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + laneWidth - 10, 'red', 65));
-    bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + laneWidth + 10, 'green', 76));
+    bikes.push(new Bike(ctx, startLineX, canvasHeight / 2 + laneWidth - 10, 'red', 65));
+    bikes.push(new Bike(ctx, startLineX, canvasHeight / 2 + laneWidth + 10, 'green', 76));
 
     setInterval(tick, 1000 / FPS);
-    setInterval(darken, 1000);
+    //setInterval(darken, 1000);
   };
 
   function darken() {
