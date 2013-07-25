@@ -28,6 +28,7 @@
     this.speed = 10;
     this.keyCode = keyCode;
     this.color = color;
+    this.crashed = false;
 
     this.drive = function() {
       if (this.speed > 0) {
@@ -52,6 +53,11 @@
 
       ctx.lineTo(this.x, this.y);
       ctx.stroke();
+
+      if (!this.onTrack()) {
+        this.speed = 0;
+        this.crashed = true;
+      }
     };
 
     this.keydown = function(keyCode) {
@@ -71,6 +77,13 @@
       this.angle = 90;
     };
 
+    this.onTrack = function() {
+      var imageData = trackCtx.getImageData(this.x, this.y, 1, 1);
+      var alpha = imageData.data[3];
+
+      return (alpha === 255);
+    };
+
     this.reset = this.init;
 
     this.init();
@@ -87,7 +100,9 @@
       debugBox.innerText += "BIKE " + bike.color + "\nspeed: "+bike.speed + "\n" +
                                 "angle: " + bike.angle + "\n" +
                                 "start: " + parseInt(bike.startX) + "," + parseInt(bike.startY) + "\n" +
-                                "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")\n" + (bike.turn == true ? "turning" : "") + "\n";
+                                "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")\n" +
+                                (bike.turn == true ? "turning" : "") + "\n" +
+                                (bike.crashed == true ? "crashed" : "") + "\n";
     });
   };
 
@@ -106,10 +121,6 @@
     trackCtx.bezierCurveTo(startX - 200, startY - (2 * laneWidth), startX - 200, startY, startX, startY);
 
     trackCtx.stroke();
-
-
-
-
   }
 
   function init() {
@@ -127,7 +138,7 @@
     paintTrack();
 
     bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + laneWidth - 10, 'red', 65));
-    bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + laneWidth + 10, 'green', 76));
+    //bikes.push(new Bike(ctx, canvasWidth / 2, canvasHeight / 2 + laneWidth + 10, 'green', 76));
     setInterval(tick, 1000 / FPS);
   };
 
