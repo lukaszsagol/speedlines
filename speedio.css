@@ -31,3 +31,16 @@ canvas {
   font-size: 10px;
   z-index: 50;
 }
+
+#banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 100px;
+  font-size: 40px;
+  margin-top: -50px;
+  margin-left: -250px;
+  text-align: center;
+  z-index: 100;
+}

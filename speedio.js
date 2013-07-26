@@ -88,11 +88,12 @@
     this.speed = 10;
     this.keyCode = keyCode;
     this.color = color;
-    this.crashed = false;
     this.lap = 1;
+    this.crashed = false;
+    this.winner = false;
 
     this.drive = function() {
-      if (this.speed > 0) {
+      if (!this.crashed) {
         if (this.turn) {
           this.angle -= 5;
         };
@@ -180,6 +181,14 @@
       return track.isOnTrack(this.x, this.y);
     };
 
+    this.win = function() {
+      if (!this.winner) {
+        this.winner = true;
+        game_write(this.color + ' has won!');
+        Bike.others(this, function(bike) { bike.stop(); });
+      }
+    };
+
     this.reset = this.init;
 
     this.init();
@@ -188,6 +197,26 @@
   Bike.prototype.bikes = [];
 
   Bike.checkForWinners = function() {
+    Bike.prototype.bikes.forEach(function(bike) {
+      if (bike.lap > 4) {
+        bike.win();
+        clearInterval(mainTick);
+      }
+    });
+
+    var stillRacing = Bike.prototype.bikes.filter(function(bike) { return !bike.crashed });
+
+    if (stillRacing.length == 1) {
+      stillRacing[0].win();
+    }
+  };
+
+  Bike.others = function(current_bike, fn) {
+    Bike.prototype.bikes.forEach(function(bike) {
+      if (bike !== current_bike) {
+        fn(bike);
+      };
+    });
   };
 
   Bike.tick = function() {
@@ -208,22 +237,18 @@
     });
   };
 
+  Bike.stop = function() {
+    Bike.prototype.bikes.forEach(function(bike) {
+      bike.stop();
+    });
+  };
+
   window.Bike = Bike;
 
   function tick() {
     Bike.tick();
-    checkForWinners();
+    Bike.checkForWinners();
     debug();
-  }
-
-  function checkForWinners() {
-    bikes.forEach(function(bike) { 
-      if (bike.lap > 4) {
-        alert('Biker '+bike.color+' is a winner');
-        bikes.forEach(function(bike) { bike.stop(); });
-        clearInterval(mainTick);
-      }
-    });
   }
 
   function debug() {
@@ -255,6 +280,7 @@
     bikes.push(new Bike(ctx, track.startPosition(2)['x'], track.startPosition(2)['y'], 'green', 76));
     bikes.push(new Bike(ctx, track.startPosition(3)['x'], track.startPosition(3)['y'],  'blue', 70));
     //bikes.push(new Bike(ctx, track.startPosition(4)['x'], track.startPosition(4)['y'], 'pink', 74));
+    //
 
     mainTick = setInterval(tick, 1000 / FPS);
   };
@@ -263,6 +289,14 @@
     c.width = c.width;
     paintTrack();
     bikes.forEach(function(bike) { bike.reset(); });
+  };
+
+  function stop_game() {
+    clearInterval(mainTick);
+  };
+
+  function game_write(text) {
+   document.querySelector('#banner').innerText = text;
   };
 
   function keydown(key) {
