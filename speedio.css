@@ -1,4 +1,5 @@
 html, body {
+  background: #99CC31;
   margin: 0;
   padding: 0;
 }
@@ -7,6 +8,10 @@ canvas {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+#container {
+  display: none;
 }
 
 #track {

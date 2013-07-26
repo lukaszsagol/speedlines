@@ -138,6 +138,10 @@ define(function() {
     }
   };
 
+  Bike.each = function(fn) {
+    Bike.prototype.bikes.forEach(function(bike) { fn(bike); });
+  };
+
   Bike.others = function(current_bike, fn) {
     Bike.prototype.bikes.forEach(function(bike) {
       if (bike !== current_bike) {
