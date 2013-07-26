@@ -10,6 +10,8 @@
   var debugBox = document.querySelector('#debug');
 
   var bikes = [];
+  var mainTick = null;
+
 
   function Track(canvas) {
     this.canvas = canvas;
@@ -75,6 +77,8 @@
 
   function Bike(context, x, y, color, keyCode){
     this.ctx = context;
+    this.historyX = [];
+    this.historyY = [];
     this.startX = x;
     this.startY = y;
     this.x = x;
@@ -96,6 +100,9 @@
         var velocityX = Math.sin(this.angle * Math.PI / 180) * this.speed;
         var velocityY = -Math.cos(this.angle * Math.PI / 180) * this.speed;
 
+        this.historyX.unshift(this.x);
+        this.historyY.unshift(this.y);
+
         this.previousX = this.x;
         this.previousY = this.y;
 
@@ -107,8 +114,9 @@
     this.tick = function() {
       ctx.beginPath();
       ctx.moveTo(this.x, this.y);
-      ctx.strokeStyle = 'rgba(0,0,0,0.7)';
-      ctx.lineWidth = 20;
+
+      ctx.strokeStyle = this.color;
+      ctx.lineWidth = 2;
 
       this.drive();
       this.checkLap();
@@ -116,12 +124,14 @@
       ctx.lineTo(this.x, this.y);
       ctx.stroke();
 
-      ctx.moveTo(this.previousX, this.previousY);
-      ctx.strokeStyle = this.color;
-      ctx.lineWidth = 1;
-      ctx.lineTo(this.x, this.y);
-      ctx.stroke();
-
+      if (this.historyX[50]) {
+        ctx.beginPath();
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 3;
+        ctx.moveTo(this.historyX[50], this.historyY[50]);
+        ctx.lineTo(this.historyX[49], this.historyY[49]);
+        ctx.stroke();
+      };
 
       if (!this.onTrack()) {
         this.crash();
@@ -163,6 +173,7 @@
       this.x = this.startX;
       this.y = this.startY;
       this.angle = 90;
+      Bike.prototype.bikes.push(this);
     };
 
     this.onTrack = function() {
@@ -172,10 +183,35 @@
     this.reset = this.init;
 
     this.init();
-  }
+  };
+
+  Bike.prototype.bikes = [];
+
+  Bike.checkForWinners = function() {
+  };
+
+  Bike.tick = function() {
+    Bike.prototype.bikes.forEach(function(bike) {
+      bike.tick();
+    });
+  };
+
+  Bike.keydown = function(key) {
+    Bike.prototype.bikes.forEach(function(bike) {
+      bike.keydown(key);
+    });
+  };
+
+  Bike.keyup = function(key) {
+    Bike.prototype.bikes.forEach(function(bike) {
+      bike.keyup(key);
+    });
+  };
+
+  window.Bike = Bike;
 
   function tick() {
-    bikes.forEach(function(bike) { bike.tick(); });
+    Bike.tick();
     checkForWinners();
     debug();
   }
@@ -183,8 +219,9 @@
   function checkForWinners() {
     bikes.forEach(function(bike) { 
       if (bike.lap > 4) {
-        console.log('Biker '+bike.color+' is a winner');
+        alert('Biker '+bike.color+' is a winner');
         bikes.forEach(function(bike) { bike.stop(); });
+        clearInterval(mainTick);
       }
     });
   }
@@ -200,6 +237,7 @@
                                 (bike.turn == true ? "turning" : "") + "\n" +
                                 (bike.crashed == true ? "crashed" : "") + "\n";
     });
+
   };
 
   function init() {
@@ -213,25 +251,13 @@
     track = new Track(trackCanvas);
     track.paint();
 
-    bikes.push(new Bike(ctx, track.startPosition(1)['x'], track.startPosition(1)['y'],  'red', 65));
+    //bikes.push(new Bike(ctx, track.startPosition(1)['x'], track.startPosition(1)['y'],  'red', 65));
     bikes.push(new Bike(ctx, track.startPosition(2)['x'], track.startPosition(2)['y'], 'green', 76));
-    bikes.push(new Bike(ctx, track.startPosition(3)['x'], track.startPosition(3)['y'],  'blue', 65));
-    bikes.push(new Bike(ctx, track.startPosition(4)['x'], track.startPosition(4)['y'], 'pink', 76));
+    bikes.push(new Bike(ctx, track.startPosition(3)['x'], track.startPosition(3)['y'],  'blue', 70));
+    //bikes.push(new Bike(ctx, track.startPosition(4)['x'], track.startPosition(4)['y'], 'pink', 74));
 
-    setInterval(tick, 1000 / FPS);
-    //setInterval(darken, 1000);
+    mainTick = setInterval(tick, 1000 / FPS);
   };
-
-  function darken() {
-    ctx.beginPath();
-    ctx.moveTo(startX, startY);
-    ctx.strokeStyle = 'rgba(0,0,0,0.1)';
-    ctx.lineWidth = laneWidth;
-
-    paintTrackCurve(ctx);
-
-    ctx.stroke();
-  }
 
   function reset() {
     c.width = c.width;
@@ -240,25 +266,11 @@
   };
 
   function keydown(key) {
-    bikes.forEach(function(bike) { bike.keydown(key.which); });
-
-    //if (key.which == 83) {
-      //bike.speed = 0;
-    //} else if (key.which == 65) {
-      //bike.speed = bike.speed + 1;
-    //} else if (key.which == 68) {
-      //debugBox.hidden = !debugBox.hidden;
-    //} else if (key.which == 82) {
-      //reset();
-    //}
+    Bike.keydown(key.which);
   };
 
   function keyup(key) {
-    bikes.forEach(function(bike) { bike.keyup(key.which); });
-
-    //if (key.which == 37) {
-      //bike.turn = false;
-    //}
+    Bike.keyup(key.which);
   }
 
   window.addEventListener('load', init, false);
