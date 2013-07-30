@@ -23,26 +23,9 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
       this.banner.style.color = color;
     };
 
-    this.debug = function() {
-      var debugBox = document.querySelector('#debug');
-
-      debugBox.innerText = '';
-      Bike.each(function(bike) {
-        debugBox.innerText += "BIKE " + bike.color + "\nspeed: "+bike.speed + "\n" +
-                                "angle: " + bike.angle + "\n" +
-                                "start: " + parseInt(bike.startX) + "," + parseInt(bike.startY) + "\n" +
-                                "pos: ("+ parseInt(bike.x) + "," + parseInt(bike.y) +")\n" +
-                                "lap: "+bike.lap+"\n"+
-                                (bike.turn == true ? "turning" : "") + "\n" +
-                                (bike.crashed == true ? "crashed" : "") + "\n" +
-                                (bike.winner == true ? "winner" : "") + "\n";
-      });
-    };
-
     this.tick = function() {
       Bike.tick();
       Bike.checkForWinners();
-      window.currentRace.debug();
     };
 
     this.keyup = function(key) {

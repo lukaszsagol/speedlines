@@ -170,20 +170,6 @@ canvas {
 
 /* In-game */
 
-#debug {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(255,255,255, 0.4);
-  padding: 5px;
-  width: 150px;
-  height: 300px;
-  font-family: monospace;
-  color: black;
-  font-size: 10px;
-  z-index: 50;
-}
-
 #banner {
   font-size: 56px;
   font-weight: bold;
