@@ -6,6 +6,11 @@
   <link rel="stylesheet" type="text/css" href="speedio.css">
   <title>Speedio, only for speed addicted</title>
   <script data-main="scripts/main" src="scripts/require.js"></script>
+  <script>
+    require.config({
+        urlArgs: "version=" + (new Date()).getTime()
+    });
+  </script>
 </head>
 <body>
   <div id="container">
