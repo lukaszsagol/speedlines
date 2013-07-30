@@ -1,6 +1,6 @@
 require(['engine/race', 'modal'], function(Race, modal) {
   document.querySelector('#start-game-button').addEventListener('click', function() {
-    document.querySelector('#menu').style.display = 'none';
+    document.querySelector('#frontend').style.display = 'none';
     document.querySelector('#container').style.display = 'block';
     new Race();
 

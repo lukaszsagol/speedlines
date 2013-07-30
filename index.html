@@ -15,68 +15,75 @@
   </script>
 </head>
 <body>
-  <div id="menu">
-    <h1>Speedio</h1>
-    <ul>
-      <li><a href="#" id="start-game-button">Start game</a></li>
-      <li><a href="#how-to-play-modal" class="call-modal">How to play</a></li>
-      <li><a href="#about-modal" id="about-button">About</a></li>
-    </ul>
-  </div>
-  <div class="semantic-content" id="about-modal">
-    <div class="modal-inner speedio-modal">
-      <h2>About this game</h2>
-      <a href="#!" class="close" data-dismiss="modal">×</a>
-      <p>
-        This is my remake of the retro polish game 
-        <a href="http://wojciech.tokarscy.com.pl/gry/zuzel">zuzel</a> created by Piotr Kaminski.
-      </p>
-      <p>
-        When I was younger I used to play <i>zuzel</i> a lot and had a lot of fun playing it with my friends.
-        Some time ago I decided that this simple game concept is ideal for a quick hack using not-so-new
-        frontend technologies such as canvas. At the same time I was sure I will have a lot of fun doing that
-        and hoped that you will have even more fun playing it.
-      </p>
-      <p>
-        I have some plans for future features, like online play, tournament mode and stuff like that.
-      </p>
-      <p>
-        Now just call your friends, get some beers and show your skills.
-      </p>
-      <p>
-        If you want to contact me I am <a href="http://twitter.com/zgryw">@zgryw</a> on Twitter or just
-        drop me a line at <a href="mailto:lukasz@sagol.pl">lukasz@sagol.pl</a>.
-      </p>
-      <p>
-        Used:
-        <a href="http://cssdeck.com/labs/apple-keyboard-via-css3" target="_blank">Apple Keyboard CSS</a>,
-        <a href="http://designmodo.github.io/Flat-UI/" target="_blank">Fragments of FlatUI</a>,
-        <a href="http://flatuicolors.com/" target="_blank">flatuicolors.com</a>
-      </p>
+  <div id="frontend">
+    <div id="menu">
+      <h1>Speedio</h1>
+      <ul>
+        <li><a href="#" id="start-game-button">Start game</a></li>
+        <li><a href="#how-to-play-modal" class="call-modal">How to play</a></li>
+        <li><a href="#about-modal" id="about-button">About</a></li>
+      </ul>
     </div>
-  </div>
-  <div class="semantic-content" id="how-to-play-modal">
-    <div class="modal-inner speedio-modal">
-      <h2>How to play</h2>
-      <a href="#!" class="close" data-dismiss="modal">×</a>
-      <p>
-        In-game controls are based on one key per player.
-        The only way you can impact the path of your bike is pressing your key
-        to make the bike turn left.
-      </p>
-      <p>
-        Remember not to hold the key too long at the end of the bend!
-      </p>
-      <dl>
-        <dd><div class="button player1"><span>Z</span></div></dd>
-        <dt>Player 1</dt>
-        <dd><div class="button player2"><span>R</span></div></dd>
-        <dt>Player 2</dt>
-        <dd><div class="button player3"><span>N</span></div></dd>
-        <dt>Player 3</dt>
-        <dd><div class="button player4"><span>P</span></div></dd>
-        <dt>Player 4</dt>
-      </dl>
+    <div class="semantic-content" id="about-modal">
+      <div class="modal-inner speedio-modal">
+        <h2>About this game</h2>
+        <a href="#!" class="close" data-dismiss="modal">×</a>
+        <p>
+          This is my remake of the retro polish game 
+          <a href="http://wojciech.tokarscy.com.pl/gry/zuzel">zuzel</a> created by Piotr Kaminski.
+        </p>
+        <p>
+          When I was younger I used to play <i>zuzel</i> a lot and had a lot of fun playing it with my friends.
+          Some time ago I decided that this simple game concept is ideal for a quick hack using not-so-new
+          frontend technologies such as canvas. At the same time I was sure I will have a lot of fun doing that
+          and hoped that you will have even more fun playing it.
+        </p>
+        <p>
+          I have some plans for future features, like online play, tournament mode and stuff like that.
+        </p>
+        <p>
+          Now just call your friends, get some beers and show your skills.
+        </p>
+        <p>
+          If you want to contact me I am <a href="http://twitter.com/zgryw">@zgryw</a> on Twitter or just
+          drop me a line at <a href="mailto:lukasz@sagol.pl">lukasz@sagol.pl</a>.
+        </p>
+        <p>
+          Used:
+          <a href="http://cssdeck.com/labs/apple-keyboard-via-css3" target="_blank">Apple Keyboard CSS</a>,
+          <a href="http://designmodo.github.io/Flat-UI/" target="_blank">Fragments of FlatUI</a>,
+          <a href="http://flatuicolors.com/" target="_blank">flatuicolors.com</a>
+        </p>
+      </div>
+    </div>
+    <div class="semantic-content" id="how-to-play-modal">
+      <div class="modal-inner speedio-modal">
+        <h2>How to play</h2>
+        <a href="#!" class="close" data-dismiss="modal">×</a>
+        <p>
+          In-game controls are based on one key per player.
+          The only way you can impact the path of your bike is pressing your key
+          to make the bike turn left.
+        </p>
+        <p>
+          Remember not to hold the key too long at the end of the bend!
+        </p>
+        <dl>
+          <dd><div class="button player1"><span>Z</span></div></dd>
+          <dt>Player 1</dt>
+          <dd><div class="button player2"><span>R</span></div></dd>
+          <dt>Player 2</dt>
+          <dd><div class="button player3"><span>N</span></div></dd>
+          <dt>Player 3</dt>
+          <dd><div class="button player4"><span>P</span></div></dd>
+          <dt>Player 4</dt>
+        </dl>
+      </div>
+    </div>
+    <div id="social">
+      <div class="g-plusone" data-size="medium"></div>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://speedlin.es/" data-text="Check out this multiplayer game, only for speed addicted - " data-via="zgryw">Tweet</a>
+      <div class="fb-like" data-href="http://speedlin.es/" data-send="false" data-layout="button_count" data-width="100" data-show-faces="true"></div>
     </div>
   </div>
   <div id="container">
@@ -85,5 +92,24 @@
     <canvas id="track"></canvas>
     <canvas id="race"></canvas>
   </div>
+  <!-- social javascripts -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=577943302243723";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  <script type="text/javascript">
+    window.___gcfg = {lang: 'en-GB'};
+
+    (function() {
+      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
 </body>
 </html>

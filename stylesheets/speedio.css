@@ -64,6 +64,13 @@ h2 {
         outline: none;
       }
 
+/* Social box */
+#social {
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  padding: 10px;
+}
 
 /* Modals / General style */
 .semantic-content .modal-inner.speedio-modal {
