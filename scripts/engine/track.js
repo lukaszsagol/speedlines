@@ -1,6 +1,7 @@
 define(function() {
   function Track(canvas) {
     this.canvas = canvas;
+    this.color = '#2c3e50';
     this.ctx = canvas.getContext('2d');
 
     this.laneWidth = 150;
@@ -18,7 +19,7 @@ define(function() {
       this.ctx.beginPath();
 
       this.ctx.moveTo(this.startX, this.startY);
-      this.ctx.strokeStyle = 'black';
+      this.ctx.strokeStyle = this.color;
       this.ctx.lineWidth = this.laneWidth;
       this.paintTrackCurve();
 

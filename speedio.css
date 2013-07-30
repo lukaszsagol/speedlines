@@ -1,5 +1,7 @@
 html, body {
-  background: #99CC31;
+  background: #ecf0f1;
+  color: #34495e;
+  font-family: 'PT Sans Narrow', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -15,12 +17,56 @@ canvas {
 }
 
 #track {
-  background: #99CC31;
+  background: #2ecc71;
   z-index: 10;
 }
 
 #race {
   z-index: 20;
+}
+
+#menu {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  margin-left: -100px;
+  width: 200px;
+  height: 300px;
+  z-index: 100;
+}
+
+#menu h1 {
+  font-size: 48px;
+  text-align: center;
+}
+
+#menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#menu li {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#menu a {
+  background: #1abc9c;
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  display: block;
+  font-size: 17px;
+  line-height: 22px;
+  padding: 9px 12px 10px;
+  text-decoration: none;
+}
+
+#menu a:hover {
+  background-color: #48c9b0;
+  color: #ffffff;
+  outline: none;
 }
 
 #debug {
@@ -38,12 +84,13 @@ canvas {
 }
 
 #banner {
+  font-size: 56px;
+  font-weight: bold;
   position: absolute;
   top: 50%;
   left: 50%;
   width: 500px;
   height: 100px;
-  font-size: 40px;
   margin-top: -50px;
   margin-left: -250px;
   text-align: center;

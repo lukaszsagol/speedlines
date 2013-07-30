@@ -58,7 +58,7 @@ define(function() {
 
     this.deleteTrace = function() {
       if (this.historyX[50]) {
-        this.paint(this.historyX[50], this.historyY[50], this.historyX[49], this.historyY[49], 'black', 5);
+        this.paint(this.historyX[50], this.historyY[50], this.historyX[49], this.historyY[49], this.track.color, 5);
       };
     };
 
@@ -104,10 +104,18 @@ define(function() {
     };
 
     this.init = function() {
-      this.ctx.moveTo(this.startX, this.startY);
+      this.angle = 90;
       this.x = this.startX;
       this.y = this.startY;
-      this.angle = 90;
+
+      this.historyX.unshift(this.x - 20);
+      this.historyY.unshift(this.y);
+
+      this.historyX.unshift(this.x);
+      this.historyY.unshift(this.y);
+
+      this.paint(this.x - 20, this.y, this.x, this.y, this.color, 2);
+
       Bike.prototype.bikes.push(this);
     };
 
@@ -118,7 +126,7 @@ define(function() {
     this.win = function() {
       if (!this.winner) {
         this.winner = true;
-        game_write(this.color + ' has won!');
+        window.currentRace.winner(this);
         Bike.others(this, function(bike) { bike.stop(); });
       }
     };
