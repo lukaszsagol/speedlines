@@ -17,6 +17,7 @@ define(function() {
     this.crashed = false;
     this.winner = false;
     this.track = track;
+    this.totalWins = 0;
 
     this.drive = function() {
       if (!this.crashed) {
@@ -104,7 +105,33 @@ define(function() {
     };
 
     this.init = function() {
+      this.restart();
+      Bike.prototype.bikes.push(this);
+    };
+
+    this.onTrack = function() {
+      return this.track.isOnTrack(this.x, this.y);
+    };
+
+    this.win = function() {
+      if (!this.winner) {
+        this.totalWins += 1;
+        this.winner = true;
+        window.currentRace.finish(this);
+        Bike.others(this, function(bike) { bike.stop(); });
+      }
+    };
+
+    this.restart = function() {
+      this.historyX = [];
+      this.historyY = [];
+      this.winner = false;
+      this.crashed = false;
+      this.lap = 1;
+      this.turn = false;
       this.angle = 90;
+      this.speed = 10;
+
       this.x = this.startX;
       this.y = this.startY;
 
@@ -115,23 +142,7 @@ define(function() {
       this.historyY.unshift(this.y);
 
       this.paint(this.x - 20, this.y, this.x, this.y, this.color, 2);
-
-      Bike.prototype.bikes.push(this);
     };
-
-    this.onTrack = function() {
-      return this.track.isOnTrack(this.x, this.y);
-    };
-
-    this.win = function() {
-      if (!this.winner) {
-        this.winner = true;
-        window.currentRace.winner(this);
-        Bike.others(this, function(bike) { bike.stop(); });
-      }
-    };
-
-    this.reset = this.init;
 
     this.init();
   };

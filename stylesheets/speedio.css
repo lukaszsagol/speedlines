@@ -46,23 +46,37 @@ h2 {
       margin-bottom: 10px;
     }
 
-      #menu ul li a {
-        background: #1abc9c;
-        border: none;
-        border-radius: 6px;
-        color: #ffffff;
-        display: block;
-        font-size: 17px;
-        line-height: 22px;
-        padding: 9px 12px 10px;
-        text-decoration: none;
-      }
+/* Buttons */
 
-      #menu ul li a:hover {
-        background-color: #48c9b0;
-        color: #ffffff;
-        outline: none;
-      }
+.button{
+  background: #1abc9c;
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  display: block;
+  font-size: 17px;
+  line-height: 22px;
+  padding: 9px 12px 10px;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #48c9b0;
+  color: #ffffff;
+  outline: none;
+}
+
+.button.button-inline {
+  display: inline-block;
+}
+
+.button.button-pumpkin {
+  background-color: #d35400;
+}
+
+.button.button-pumpkin:hover {
+  background-color: #e67e22;
+}
 
 /* Social box */
 #social {
@@ -104,7 +118,7 @@ dl dt {
   margin: 0;
 }
 
-.button {
+.key {
   display: inline-block;
 	color: #aaa;
 	font: bold 9pt arial;
@@ -125,7 +139,7 @@ dl dt {
 	text-shadow: 0px 1px 0px #f5f5f5;
 }
 
-.button span {
+.key span {
   display: block;
   margin: 13px 0 0;
   text-transform: uppercase;
@@ -170,16 +184,20 @@ canvas {
 
 /* In-game */
 
-#banner {
-  font-size: 56px;
-  font-weight: bold;
+#center-area {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 500px;
-  height: 100px;
-  margin-top: -50px;
-  margin-left: -250px;
+  width: 700px;
+  height: 120px;
+  margin-top: -60px;
+  margin-left: -350px;
   text-align: center;
   z-index: 100;
+}
+
+#banner {
+  font-size: 56px;
+  font-weight: bold;
+  text-align: center;
 }

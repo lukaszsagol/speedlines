@@ -19,9 +19,9 @@
     <div id="menu">
       <h1>speed lines</h1>
       <ul>
-        <li><a href="#" id="start-game-button">Start game</a></li>
-        <li><a href="#how-to-play-modal" class="call-modal">How to play</a></li>
-        <li><a href="#about-modal" id="about-button">About</a></li>
+        <li><a href="#" class="button" id="start-game-button">Start game</a></li>
+        <li><a href="#how-to-play-modal" class="button">How to play</a></li>
+        <li><a href="#about-modal" class="button">About</a></li>
       </ul>
     </div>
     <div class="semantic-content" id="about-modal">
@@ -69,13 +69,13 @@
           Remember not to hold the key too long at the end of the bend!
         </p>
         <dl>
-          <dd><div class="button player1"><span>Z</span></div></dd>
+          <dd><div class="key player1"><span>Z</span></div></dd>
           <dt>Player 1</dt>
-          <dd><div class="button player2"><span>R</span></div></dd>
+          <dd><div class="key player2"><span>R</span></div></dd>
           <dt>Player 2</dt>
-          <dd><div class="button player3"><span>N</span></div></dd>
+          <dd><div class="key player3"><span>N</span></div></dd>
           <dt>Player 3</dt>
-          <dd><div class="button player4"><span>P</span></div></dd>
+          <dd><div class="key player4"><span>P</span></div></dd>
           <dt>Player 4</dt>
         </dl>
       </div>
@@ -87,7 +87,10 @@
     </div>
   </div>
   <div id="container">
-    <div id="banner"></div>
+    <div id="center-area">
+      <div id="banner"></div>
+      <a id="restart-button" class="button button-inline button-pumpkin" style="visibility: hidden;" href="#">Race again</a>
+    </div>
     <canvas id="track"></canvas>
     <canvas id="race"></canvas>
   </div>

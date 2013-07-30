@@ -11,8 +11,11 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
     this.trackContext = this.trackCanvas.getContext('2d');
 
     this.banner = document.querySelector('#banner');
+    this.restartButton = document.querySelector('#restart-button');
 
     this.mainLoop = null;
+
+    var thisRace = this;
 
     this.write = function(text) {
       this.writeColor(text, '#34495e');
@@ -64,6 +67,7 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
         new Bike(gameContext, this.track.startPosition(3)['x'], this.track.startPosition(3)['y'],  '#c0392b', 70, track);
         new Bike(gameContext, this.track.startPosition(4)['x'], this.track.startPosition(4)['y'],  '#9b59b6', 72, track);
 
+        restartButton.addEventListener('click', function() { thisRace.restart(); });
       };
 
       window.currentRace = this;
@@ -71,13 +75,25 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
       startCountdown(4);
     };
 
-    this.winner = function(bike) {
+    this.finish = function(bike) {
       this.finished = true;
       this.writeColor('Winner!', bike.color);
+      this.restartButton.style.visibility = 'visible';
     };
 
     this.start = function() {
       this.mainLoop = setInterval(this.tick, 1000 / this.FPS);
+    };
+
+    this.restart = function() {
+      this.restartButton.style.visibility = 'hidden';
+      this.gameCanvas.width = this.trackCanvas.width;
+      this.finished = false;
+      clearInterval(this.mainLoop);
+
+      startCountdown(4);
+
+      Bike.each(function(bike) { bike.restart(); });
     };
 
     this.init();
