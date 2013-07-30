@@ -1,0 +1,192 @@
+html, body {
+  background: #ecf0f1;
+  color: #34495e;
+  font-family: 'PT Sans Narrow', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: url('../images/bg.png') no-repeat 0 0;
+}
+
+h1 {
+  color: #34495e;
+  font-size: 48px;
+  text-align: center;
+}
+
+h2 {
+  color: #34495e;
+  font-size: 28px;
+  margin-top: 0;
+}
+
+/* Menu */
+
+#menu {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  margin-left: -100px;
+  width: 200px;
+  height: 300px;
+  z-index: 100;
+}
+
+  #menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+    #menu ul li {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+      #menu ul li a {
+        background: #1abc9c;
+        border: none;
+        border-radius: 6px;
+        color: #ffffff;
+        display: block;
+        font-size: 17px;
+        line-height: 22px;
+        padding: 9px 12px 10px;
+        text-decoration: none;
+      }
+
+      #menu ul li a:hover {
+        background-color: #48c9b0;
+        color: #ffffff;
+        outline: none;
+      }
+
+
+/* Modals / General style */
+.semantic-content .modal-inner.speedio-modal {
+  background: #bdc3c7;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 5px 5px rgba(0,0,0,0.5);
+  width: 340px;
+  margin-left: -185px;
+}
+
+.semantic-content .modal-inner.speedio-modal .close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+/* Modals / How to play */
+
+dl dd {
+  display: inline-block;
+  width: 20%;
+  margin: 0;
+}
+
+dl dt {
+  display: inline-block;
+  width: 79%;
+  margin: 0;
+}
+
+.button {
+  display: inline-block;
+	color: #aaa;
+	font: bold 9pt arial;
+	text-decoration: none;
+	text-align: center;
+	width: 44px;
+	height: 41px;
+	margin: 5px;
+	background: #eff0f2;
+	border-radius: 4px;
+	border-top: 1px solid #f5f5f5;
+  margin-bottom: 20px;
+	box-shadow:
+		inset 0 0 25px #e8e8e8,
+		0 1px 0 #c3c3c3,
+		0 2px 0 #c9c9c9,
+		0 2px 3px #333;
+	text-shadow: 0px 1px 0px #f5f5f5;
+}
+
+.button span {
+  display: block;
+  margin: 13px 0 0;
+  text-transform: uppercase;
+}
+
+.player1 {
+  color: #2980b9;
+}
+
+.player2 {
+  color: #f1c40f;
+}
+
+.player3 {
+  color: #c0392b;
+}
+
+.player4 {
+  color: #9b59b6;
+}
+
+/* Game setup */
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#container {
+  display: none;
+}
+
+#track {
+  background: #2ecc71;
+  z-index: 10;
+}
+
+#race {
+  z-index: 20;
+}
+
+/* In-game */
+
+#debug {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255,255,255, 0.4);
+  padding: 5px;
+  width: 150px;
+  height: 300px;
+  font-family: monospace;
+  color: black;
+  font-size: 10px;
+  z-index: 50;
+}
+
+#banner {
+  font-size: 56px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 100px;
+  margin-top: -50px;
+  margin-left: -250px;
+  text-align: center;
+  z-index: 100;
+}

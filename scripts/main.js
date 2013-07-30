@@ -1,18 +1,10 @@
-require(['engine/race'], function(Race) {
-  document.querySelector('#start-game').addEventListener('click', function() {
+require(['engine/race', 'modal'], function(Race, modal) {
+  document.querySelector('#start-game-button').addEventListener('click', function() {
     document.querySelector('#menu').style.display = 'none';
     document.querySelector('#container').style.display = 'block';
     new Race();
 
     return false;
-  }, false);
-
-  document.querySelector('#how-to-play').addEventListener('click', function() {
-    alert('Soon...');
-  }, false);
-
-  document.querySelector('#share').addEventListener('click', function() {
-    alert('Soon...');
   }, false);
 
   window.addEventListener('keydown', function(event) {
