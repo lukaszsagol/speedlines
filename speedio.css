@@ -4,6 +4,11 @@ html, body {
   font-family: 'PT Sans Narrow', sans-serif;
   margin: 0;
   padding: 0;
+  height: 100%;
+}
+
+body {
+  background: url(images/bg.png) no-repeat 0 0;
 }
 
 canvas {

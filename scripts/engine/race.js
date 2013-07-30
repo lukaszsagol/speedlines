@@ -71,6 +71,7 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
       with(this) {
         this.gameCanvas.width = this.trackCanvas.width = window.innerWidth;
         this.gameCanvas.height = this.trackCanvas.height = window.innerHeight;
+        this.gameContext.translate(0.5, 0.5);
 
         this.track = new Track(trackCanvas);
         this.track.paint();
@@ -84,7 +85,7 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
 
       window.currentRace = this;
 
-      startCountdown(6);
+      startCountdown(4);
     };
 
     this.winner = function(bike) {
