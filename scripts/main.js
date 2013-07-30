@@ -1,4 +1,5 @@
-require(['game', 'engine/bike', 'engine/track'], function(Game, Bike, Track) {
-  new Game();
+require(['engine/race'], function(Race) {
+  new Race();
+
   document.querySelector('#container').style.display = 'block';
 });

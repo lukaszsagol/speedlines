@@ -38,32 +38,39 @@ define(function() {
       }
     };
 
-    this.tick = function() {
-      var ctx = this.ctx;
-      ctx.beginPath();
-      ctx.moveTo(this.x, this.y);
-
-      ctx.strokeStyle = this.color;
-      ctx.lineWidth = 2;
-
-      this.drive();
-      this.checkLap();
-
-      ctx.lineTo(this.x, this.y);
-      ctx.stroke();
-
-      if (this.historyX[50]) {
+    this.paint = function(fromX, fromY, toX, toY, strokeStyle, lineWidth) {
+      with(this) {
         ctx.beginPath();
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 3;
-        ctx.moveTo(this.historyX[50], this.historyY[50]);
-        ctx.lineTo(this.historyX[49], this.historyY[49]);
+
+        ctx.strokeStyle = strokeStyle;
+        ctx.lineWidth = lineWidth;
+
+        ctx.moveTo(fromX, fromY);
+        ctx.lineTo(toX, toY);
+
         ctx.stroke();
       };
+    };
 
-      if (!this.onTrack()) {
-        this.crash();
-      }
+    this.paintTrace = function() {
+      this.paint(this.previousX, this.previousY, this.x, this.y, this.color, 2);
+    };
+
+    this.deleteTrace = function() {
+      if (this.historyX[50]) {
+        this.paint(this.historyX[50], this.historyY[50], this.historyX[49], this.historyY[49], 'black', 5);
+      };
+    };
+
+    this.tick = function() {
+      this.drive();
+
+      this.paintTrace();
+      this.deleteTrace();
+
+      this.checkLap();
+
+      if (!this.onTrack())   { this.crash(); };
     };
 
     this.checkLap = function() {

@@ -1,6 +1,6 @@
 define(['engine/track', 'engine/bike'], function(Track, Bike) {
 
-  function Game() {
+  function Race() {
     this.FPS = 30;
 
     this.gameCanvas = document.querySelector('#race');
@@ -71,5 +71,5 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
     this
   };
 
-  return Game;
+  return Race;
 });
