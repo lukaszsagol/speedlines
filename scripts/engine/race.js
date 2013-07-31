@@ -13,6 +13,7 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
 
     this.banner = document.querySelector('#banner');
     this.restartButton = document.querySelector('#restart-button');
+    this.menuButton = document.querySelector('#back-to-menu-button');
 
     this.mainLoop = null;
 
@@ -80,6 +81,7 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
       this.finished = true;
       this.writeColor('Winner!', bike.color);
       this.restartButton.style.visibility = 'visible';
+      this.menuButton.style.visibility = 'visible';
     };
 
     this.start = function() {
@@ -88,6 +90,7 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
 
     this.restart = function() {
       this.restartButton.style.visibility = 'hidden';
+      this.menuButton.style.visibility = 'hidden';
       this.gameCanvas.width = this.trackCanvas.width;
       this.finished = false;
       clearInterval(this.mainLoop);

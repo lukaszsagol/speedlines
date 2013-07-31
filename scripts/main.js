@@ -26,6 +26,10 @@ require(['engine/race', 'modal'], function(Race, modal) {
     return false;
   }, false);
 
+  document.querySelector('#back-to-menu-button').addEventListener('click', function() {
+    window.location.href = '/';
+  });
+
   window.addEventListener('keydown', function(event) {
     if (window.currentRace) {
       if (window.currentRace.finished) { 
