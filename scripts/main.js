@@ -1,8 +1,27 @@
 require(['engine/race', 'modal'], function(Race, modal) {
-  document.querySelector('#start-game-button').addEventListener('click', function() {
-    document.querySelector('#frontend').style.display = 'none';
-    document.querySelector('#container').style.display = 'block';
-    new Race();
+  document.querySelector('#select-players-button').addEventListener('click', function() {
+    document.querySelector('#menu').style.display = 'none';
+    document.querySelector('#starting-game').style.display = 'block';
+
+    return false;
+  }, false);
+
+  var buttons = document.querySelectorAll('.start-game-button');
+
+  for (var i = 0; i < buttons.length; ++i) {
+    buttons[i].addEventListener('click', function() {
+      document.querySelector('#frontend').style.display = 'none';
+      document.querySelector('#container').style.display = 'block';
+
+      var race = new Race(this.dataset.players);
+
+      return false;
+    }, false);
+  };
+
+  document.querySelector('.back-button').addEventListener('click', function() {
+    document.querySelector('#menu').style.display = 'block';
+    document.querySelector('#starting-game').style.display = 'none';
 
     return false;
   }, false);
