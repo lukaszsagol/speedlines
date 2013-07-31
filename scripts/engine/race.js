@@ -62,10 +62,10 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
         this.track = new Track(trackCanvas);
         this.track.paint();
 
-        new Bike(gameContext, this.track.startPosition(1)['x'], this.track.startPosition(1)['y'], '#2980b9', 77, track);
-        new Bike(gameContext, this.track.startPosition(2)['x'], this.track.startPosition(2)['y'], '#f1c40f', 76, track);
-        new Bike(gameContext, this.track.startPosition(3)['x'], this.track.startPosition(3)['y'],  '#c0392b', 70, track);
-        new Bike(gameContext, this.track.startPosition(4)['x'], this.track.startPosition(4)['y'],  '#9b59b6', 72, track);
+        new Bike(gameContext, this.track.startPosition(1)['x'], this.track.startPosition(1)['y'], '#2980b9', 81, track);
+        new Bike(gameContext, this.track.startPosition(2)['x'], this.track.startPosition(2)['y'], '#f1c40f', 88, track);
+        new Bike(gameContext, this.track.startPosition(3)['x'], this.track.startPosition(3)['y'],  '#c0392b', 77, track);
+        new Bike(gameContext, this.track.startPosition(4)['x'], this.track.startPosition(4)['y'],  '#9b59b6', 80, track);
 
         restartButton.addEventListener('click', function() { thisRace.restart(); });
       };
