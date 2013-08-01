@@ -24,7 +24,7 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
     };
 
     this.writeColor = function(text, color) {
-      this.banner.innerText = text;
+      this.banner.textContent = text;
       this.banner.style.color = color;
     };
 
