@@ -87,7 +87,7 @@ h2 {
 /* Social box */
 #social {
   position: absolute;
-  bottom: 0;
+  top: 0;
   right: 20px;
   padding: 10px;
 }
