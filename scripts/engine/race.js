@@ -64,10 +64,10 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
         this.track = new Track(trackCanvas);
         this.track.paint();
 
-        if (this.players > 3) { new Bike(gameContext, this.track.startPosition(4)['x'], this.track.startPosition(4)['y'],  '#9b59b6', 80, track); }
-        if (this.players > 2) { new Bike(gameContext, this.track.startPosition(3)['x'], this.track.startPosition(3)['y'],  '#c0392b', 77, track); }
-        if (this.players > 1) { new Bike(gameContext, this.track.startPosition(2)['x'], this.track.startPosition(2)['y'], '#f1c40f', 88, track); }
-        if (this.players > 0) { new Bike(gameContext, this.track.startPosition(1)['x'], this.track.startPosition(1)['y'], '#2980b9', 81, track); }
+        if (this.players > 3) { new Bike(gameContext, this.track.startPosition(4)['x'], this.track.startPosition(4)['y'],  '#9b59b6', 78, track); } // player 4 - N
+        if (this.players > 2) { new Bike(gameContext, this.track.startPosition(3)['x'], this.track.startPosition(3)['y'],  '#c0392b', 67, track); } // player 3 - C
+        if (this.players > 1) { new Bike(gameContext, this.track.startPosition(2)['x'], this.track.startPosition(2)['y'], '#f1c40f', 80, track); }  // player 2 - P
+        if (this.players > 0) { new Bike(gameContext, this.track.startPosition(1)['x'], this.track.startPosition(1)['y'], '#2980b9', 81, track); }  // player 1 - Q
 
         restartButton.addEventListener('click', function() { thisRace.restart(); });
       };
