@@ -18,6 +18,10 @@ define(function() {
     this.winner = false;
     this.track = track;
     this.totalWins = 0;
+    this.raceStartTime = null;
+    this.lapStartTime = null;
+    this.lastSplitTime = null;
+    this.bestSplitTime = null;
 
     this.drive = function() {
       if (!this.crashed) {
@@ -77,6 +81,12 @@ define(function() {
     this.checkLap = function() {
       if (this.track.passedStartLine(this.previousX, this.x)) {
         this.lap += 1;
+        var now = Date.now();
+        this.lastSplitTime = now - this.lapStartTime;
+        this.lapStartTime = now;
+        this.bestSplitTime = this.bestSplitTime && this.bestSplitTime < this.lastSplitTime ? this.bestSplitTime : this.lastSplitTime;
+        console.log(this.lastSplitTime);
+        console.log(this.bestSplitTime);
       };
     };
 
@@ -122,6 +132,11 @@ define(function() {
       }
     };
 
+    this.start = function() {
+      var now = Date.now();
+      this.lapStartTime = this.raceStartTime = now;
+    };
+
     this.restart = function() {
       this.historyX = [];
       this.historyY = [];
@@ -150,17 +165,18 @@ define(function() {
   Bike.prototype.bikes = [];
 
   Bike.checkForWinners = function() {
-    Bike.prototype.bikes.forEach(function(bike) {
-      if (bike.lap > 4) {
-        bike.win();
-        clearInterval(mainTick);
+    if (Bike.prototype.bikes.length > 1) {
+      Bike.prototype.bikes.forEach(function(bike) {
+        if (bike.lap > 4) {
+          bike.win();
+        }
+      });
+
+      var stillRacing = Bike.prototype.bikes.filter(function(bike) { return !bike.crashed });
+
+      if (stillRacing.length == 1) {
+        stillRacing[0].win();
       }
-    });
-
-    var stillRacing = Bike.prototype.bikes.filter(function(bike) { return !bike.crashed });
-
-    if (stillRacing.length == 1) {
-      stillRacing[0].win();
     }
   };
 

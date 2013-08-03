@@ -30,7 +30,7 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
 
     this.tick = function() {
       Bike.tick();
-      Bike.checkForWinners();
+      if (!this.finished) { Bike.checkForWinners(); }
     };
 
     this.keyup = function(key) {
@@ -86,6 +86,7 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
 
     this.start = function() {
       this.mainLoop = setInterval(this.tick, 1000 / this.FPS);
+      Bike.each(function(bike) { bike.start(); });
     };
 
     this.restart = function() {
