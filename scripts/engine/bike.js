@@ -86,8 +86,6 @@ define(function() {
         this.lastSplitTime = now - this.lapStartTime;
         this.lapStartTime = now;
         this.bestSplitTime = this.bestSplitTime && this.bestSplitTime < this.lastSplitTime ? this.bestSplitTime : this.lastSplitTime;
-        console.log(this.lastSplitTime);
-        console.log(this.bestSplitTime);
       };
     };
 
@@ -111,12 +109,16 @@ define(function() {
 
       if (this.lastSplitTime) {
         var lastSplitTimeDate = new Date(this.lastSplitTime);
-        lastSplit = lastSplitTimeDate.getSeconds() + "." + lastSplitTimeDate.getMilliseconds();
+        var lastSplitMilis = lastSplitTimeDate.getMilliseconds();
+        if (lastSplitMilis.toString().length === 2) { lastSplitMilis = "0"+lastSplitMilis.toString(); }
+        lastSplit = lastSplitTimeDate.getSeconds() + "." + lastSplitMilis;
       };
 
       if (this.bestSplitTime) {
         var bestSplitTimeDate = new Date(this.bestSplitTime);
-        bestSplit = bestSplitTimeDate.getSeconds() + "." + bestSplitTimeDate.getMilliseconds();
+        var bestSplitMilis = bestSplitTimeDate.getMilliseconds();
+        if (bestSplitMilis.toString().length === 2) { bestSplitMilis = "0"+bestSplitMilis.toString(); }
+        bestSplit = bestSplitTimeDate.getSeconds() + "." + bestSplitMilis;
       };
 
       var outputHTML = "<div class='bike' style='color: "+this.color+" '>" + 
