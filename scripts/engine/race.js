@@ -90,7 +90,7 @@ define(['engine/track', 'engine/bike'], function(Track, Bike) {
     };
 
     this.training = function() {
-      this.write('Training mode');
+      this.write('Forever alone mode');
       this.restartButton.style.visibility = 'visible';
       this.menuButton.style.visibility = 'visible';
     };
