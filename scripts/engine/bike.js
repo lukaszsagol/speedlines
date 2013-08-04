@@ -1,6 +1,7 @@
 define(function() {
 
-  function Bike(context, x, y, color, keyCode, track){
+  function Bike(name, context, x, y, color, keyCode, track){
+    this.name = name;
     this.ctx = context;
     this.historyX = [];
     this.historyY = [];
@@ -104,6 +105,31 @@ define(function() {
       this.turn = this.turn || (keyCode === this.keyCode);
     };
 
+    this.writeStats = function() {
+      var lastSplit = 'waiting';
+      var bestSplit = 'waiting';
+
+      if (this.lastSplitTime) {
+        var lastSplitTimeDate = new Date(this.lastSplitTime);
+        lastSplit = lastSplitTimeDate.getSeconds() + "." + lastSplitTimeDate.getMilliseconds();
+      };
+
+      if (this.bestSplitTime) {
+        var bestSplitTimeDate = new Date(this.bestSplitTime);
+        bestSplit = bestSplitTimeDate.getSeconds() + "." + bestSplitTimeDate.getMilliseconds();
+      };
+
+      var outputHTML = "<div class='bike' style='color: "+this.color+" '>" + 
+      this.name + "<br/>" +
+        this.lap + "<br/>" +
+        lastSplit + "<br/>" +
+        bestSplit + "<br/>" +
+        this.totalWins + "<br/>" +
+      "</div>";
+
+      return outputHTML;
+    };
+
     this.stop = function() {
       this.speed = 0;
     };
@@ -116,7 +142,7 @@ define(function() {
 
     this.init = function() {
       this.restart();
-      Bike.prototype.bikes.push(this);
+      Bike.prototype.bikes.unshift(this);
     };
 
     this.onTrack = function() {
@@ -167,7 +193,7 @@ define(function() {
   Bike.checkForWinners = function() {
     if (Bike.prototype.bikes.length > 1) {
       Bike.prototype.bikes.forEach(function(bike) {
-        if (bike.lap > 4) {
+        if (bike.lap > 4 && !window.currentRace.finished) {
           bike.win();
         }
       });
@@ -182,6 +208,10 @@ define(function() {
 
   Bike.each = function(fn) {
     Bike.prototype.bikes.forEach(function(bike) { fn(bike); });
+  };
+
+  Bike.count = function() {
+    return Bike.prototype.bikes.length;
   };
 
   Bike.others = function(current_bike, fn) {
@@ -207,6 +237,14 @@ define(function() {
   Bike.keyup = function(key) {
     Bike.prototype.bikes.forEach(function(bike) {
       bike.keyup(key);
+    });
+  };
+
+  Bike.writeStats = function(wrapper) {
+    wrapper.innerHTML = '';
+
+    Bike.each(function(bike) {
+      wrapper.innerHTML += bike.writeStats();
     });
   };
 

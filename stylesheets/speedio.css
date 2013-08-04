@@ -219,6 +219,32 @@ canvas {
   z-index: 100;
 }
 
+#race-stats {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 700px;
+  height: 120px;
+  margin-left: -350px;
+  z-index: 101;
+}
+
+#race-stats .headers {
+  width: 19%;
+  display: inline-block;
+  font-weight: bold;
+}
+
+#race-stats-content {
+  width: 80%;
+  display: inline-block;
+}
+
+#race-stats-content .bike {
+  display: inline-block;
+  width: 24%;
+}
+
 #banner {
   font-size: 56px;
   font-weight: bold;
