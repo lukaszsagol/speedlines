@@ -1,4 +1,6 @@
-## Speedio, retro game for speed addicts
+## [speedlines](http://speedlin.es/)
+#### Retro game for speed addicts
 
+Speedlines is a simple racing game created in HTML5 Canvas with local multiplayer.
 
-More info coming soon… but be ensured that you (and your friends) are going to have lots of fun.
+It's based on awesome polish retro game [żużel](http://wojciech.tokarscy.com.pl/gry/zuzel).
